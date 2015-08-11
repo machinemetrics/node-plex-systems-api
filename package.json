@@ -1,0 +1,25 @@
+{
+  "name": "node-plex-systems-api",
+  "version": "1.0.0",
+  "description": "API for accessing Plex Systems Manufacturing ERP Web Services",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://lauzierj@github.com/machinemetrics/node-plex-systems-api.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/machinemetrics/node-plex-systems-api/issues"
+  },
+  "homepage": "https://github.com/machinemetrics/node-plex-systems-api#readme",
+  "dependencies": {
+    "lodash": "^3.10.1",
+    "q": "^1.4.1",
+    "q-memcached": "git+https://github.com/machinemetrics/node-q-memcached.git",
+    "soap-q": "git+https://github.com/lauzierj/soap-q.git"
+  }
+}
