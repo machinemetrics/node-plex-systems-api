@@ -1,4 +1,4 @@
-# node-plex-systems
+# node-plex-systems-api
 API for accessing Plex Systems Manufacturing ERP Web Services
 
 ```
