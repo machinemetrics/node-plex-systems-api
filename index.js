@@ -28,10 +28,16 @@ Plex.prototype.call = function(dataSourceName, args) {
 
       return client.ExecuteDataSourcePost({
         dataSourceKey: dataSourceKey,
-        parameterNames: keys,
+        parameterNames: keys.join(','),
         parameterValues: _.values(args).join(','),
         delimeter: ','
       }).then(function(results) {
+        if(dataSourceKey === 1825 && results.ResultSets.ResultSet[0].Rows.Row.length > 1) {
+          var tmp = results;
+          results.ResultSets.ResultSet[0].Rows.Row = _.filter(tmp.ResultSets.ResultSet[0].Rows.Row, function (n) {
+            return (n.Columns.Column[1].Value === args.DatasourceName);
+          });
+        }
         return self.normalizeResults(results);
       });
     });
