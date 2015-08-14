@@ -1,7 +1,7 @@
 var soap = require('soap-q'),
-  Q = require('q'),
-  Memcached = require('q-memcached'),
-  _ = require('lodash');
+    Q = require('q'),
+    Memcached = require('q-memcached'),
+    _ = require('lodash');
 
 function Plex(username, password, memcached, test) {
   this.username = username;
@@ -32,12 +32,6 @@ Plex.prototype.call = function(dataSourceName, args) {
         parameterValues: _.values(args).join(','),
         delimeter: ','
       }).then(function(results) {
-        if(dataSourceKey === 1825 && results.ResultSets.ResultSet[0].Rows.Row.length > 1) {
-          var tmp = results;
-          results.ResultSets.ResultSet[0].Rows.Row = _.filter(tmp.ResultSets.ResultSet[0].Rows.Row, function (n) {
-            return (n.Columns.Column[1].Value === args.DatasourceName);
-          });
-        }
         return self.normalizeResults(results);
       });
     });
@@ -76,7 +70,8 @@ Plex.prototype.findDataSourceKey = function(dataSourceName) {
         return self.call(1825, {
           DatasourceName: dataSourceName
         }).then(function (result) {
-          return self.setDataSourceKey(dataSourceName, parseInt(result.Datasource_Key));
+          var key = _.result(_.find(result, { DatasourceName: dataSourceName }), 'Datasource_Key');
+          return self.setDataSourceKey(dataSourceName, parseInt(key));
         });
       }
     });
@@ -93,9 +88,6 @@ Plex.prototype.normalizeResults = function(results) {
 
     return result;
   });
-
-  if(results.length == 1)
-    results = _.first(results);
 
   return results;
 };
