@@ -70,7 +70,7 @@ Plex.prototype.findDataSourceKey = function(dataSourceName) {
         return self.call(1825, {
           DatasourceName: dataSourceName
         }).then(function (result) {
-          var key = _.result(_.find(result, { DatasourceName: dataSourceName }), 'Datasource_Key');
+          var key = _.result(_.find(result, { Datasource_Name: dataSourceName }), 'Datasource_Key');
           return self.setDataSourceKey(dataSourceName, parseInt(key));
         });
       }
