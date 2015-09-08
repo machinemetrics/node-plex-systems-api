@@ -79,17 +79,25 @@ Plex.prototype.findDataSourceKey = function(dataSourceName) {
 };
 
 Plex.prototype.normalizeResults = function(results) {
-  results = _.map(results.ResultSets.ResultSet[0].Rows.Row, function(row) {
-    var result = {};
+  if(results.Error)
+    throw new Error(results.Message);
 
-    _.each(row.Columns.Column, function(col) {
-      result[col.Name] = col.Value;
+  try {
+    results = _.map(results.ResultSets.ResultSet[0].Rows.Row, function(row) {
+      var result = {};
+
+      _.each(row.Columns.Column, function(col) {
+        result[col.Name] = col.Value;
+      });
+
+      return result;
     });
 
-    return result;
-  });
-
-  return results;
+    return results;
+  }
+  catch(e) {
+    return null;
+  }
 };
 
 Plex.prototype.getDataSourceKey = function(name) {
