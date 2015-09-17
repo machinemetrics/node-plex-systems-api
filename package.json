@@ -19,7 +19,6 @@
   "dependencies": {
     "lodash": "^3.10.1",
     "q": "^1.4.1",
-    "q-memcached": "git+https://github.com/machinemetrics/node-q-memcached.git",
     "soap-q": "git+https://github.com/lauzierj/soap-q.git"
   }
 }

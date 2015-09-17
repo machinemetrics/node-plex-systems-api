@@ -1,6 +1,5 @@
 var soap = require('soap-q'),
     Q = require('q'),
-    Memcached = require('q-memcached'),
     _ = require('lodash');
 
 function Plex(username, password, memcached, test) {
@@ -10,8 +9,8 @@ function Plex(username, password, memcached, test) {
   this.dataSourceKeys = {};
 
   if(memcached) {
-    this.memcached = new Memcached(memcached.hosts);
-    this.memcachedTtl = memcached.defaultTtl;
+    this.memcached = memcached;
+    this.memcachedTtl = 360;
   }
 }
 
