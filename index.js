@@ -14,7 +14,23 @@ function Plex(username, password, memcached, test) {
   }
 }
 
-Plex.prototype.call = function(dataSourceName, args) {
+Plex.prototype.call = function(dataSourceName, plexArgs, cacheArgs){
+  var self = this;
+  if(!cacheArgs || !cacheArgs.cache || plexArgs)
+    return self.prototype.callPlex(dataSourceName, plexArgs);
+
+  return self.memcached.get(key).then(function(val){
+    if(val) return val;
+
+    return self.prototype.callPlex(dataSourceName, plexArgs).then(function(ret){
+      return self.memcached.set(key, ret, cacheArgs.Ttl).then(function(){
+        return ret;
+      });
+    });
+  });
+};
+
+Plex.prototype.callPlex = function(dataSourceName, args) {
   var self = this;
 
   if(!args) args = {};
