@@ -16,7 +16,8 @@ function Plex(username, password, memcached, test) {
 
 Plex.prototype.call = function(dataSourceName, plexArgs, cacheArgs){
   var self = this;
-  if(!cacheArgs || !cacheArgs.cache || plexArgs)
+  var key = _.values(args).join(',');
+  if(!cacheArgs || !cacheArgs.cache || !plexArgs)
     return self.callPlex(dataSourceName, plexArgs);
 
   return self.memcached.get(key).then(function(val){
