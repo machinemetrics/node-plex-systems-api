@@ -23,7 +23,7 @@ Plex.prototype.call = function(dataSourceName, plexArgs, cacheArgs){
     if(val) return val;
 
     return self.callPlex(dataSourceName, plexArgs).then(function(ret){
-      return self.memcached.set(key, ret, cacheArgs.Ttl).then(function(){
+      return self.memcached.set(key, ret, cacheArgs.ttl).then(function(){
         return ret;
       });
     });
